@@ -1,5 +1,6 @@
 import serial
 import serial.tools.list_ports
+import sys
 # import keras
 # from keras.datasets import mnist
 import threading
@@ -38,17 +39,20 @@ def readuart(port):
         print(ch.decode(encoding='ascii'), end='')
 
 
-def main():
+def main(argv):
     # displaydata()
     port = myopen()
     print(port)
     # ReadUARTThread = threading.Thread(target=ReadUART(port))
     # ReadUARTThread.start()
     # port.write('a'.encode())
-    n = port.inWaiting()
-    data = port.read(10)
-    print(data.decode('gbk'))
+    for i in range(10):
+        port.write('252'.encode())
+        data = port.read(3)
+        print(data)
+
     port.close()
 
 
-main()
+if __name__ == "__main__":
+    main(sys.argv)
